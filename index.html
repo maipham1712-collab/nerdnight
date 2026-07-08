@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nerd Night — Nerd Society</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Pangolin&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #f2ede3;
+    --cream-deep: #e8ded0;
+    --paper-line: #d8cdb8;
+    --ink: #2b2925;
+    --ink-soft: #55524a;
+    --oxblood: #7a2e2e;
+    --oxblood-deep: #5c2222;
+    --gold: #a9823f;
+    --ok: #3b6d11;
+    --err: #a32d2d;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--cream);
+    background-image:
+      repeating-linear-gradient(var(--cream) 0px, var(--cream) 33px, var(--paper-line) 34px);
+    color: var(--ink);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- doodle bits ---------- */
+  .squiggle{
+    display:block;
+    width: 140px;
+    height: 14px;
+    margin: 10px auto 0;
+  }
+  .squiggle path{
+    fill:none;
+    stroke: var(--oxblood);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+
+  /* ---------- header ---------- */
+  header{ padding: 28px 0 8px; }
+  .brandline{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{
+    font-family:'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .brand b{ color: var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero{ position: relative; padding: 56px 0 40px; text-align: center; }
+
+  .mascot{
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    margin: 0 auto 6px;
+    display:block;
+    animation: wobble 6s ease-in-out infinite;
+  }
+  @keyframes wobble{
+    0%,100%{ transform: rotate(-0.6deg); }
+    50%{ transform: rotate(0.6deg); }
+  }
+
+  .eyebrow{
+    font-family:'Pangolin', cursive;
+    font-size: 20px;
+    color: var(--oxblood);
+    transform: rotate(-1.5deg);
+    display:inline-block;
+    margin-bottom: 6px;
+  }
+
+  h1{
+    font-family:'DM Serif Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(48px, 9vw, 92px);
+    margin: 0;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .tagline{ max-width: 520px; margin: 22px auto 0; font-size: 17px; color: var(--ink-soft); }
+  .tagline b{ color: var(--ink); font-weight: 600; }
+
+  .cta-row{ margin-top: 34px; display:flex; gap: 16px; justify-content:center; flex-wrap: wrap; }
+
+  .btn{
+    font-family:'Be Vietnam Pro', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 3px;
+    text-decoration:none;
+    display:inline-block;
+    border: 1.5px solid var(--ink);
+    cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+    position: relative;
+    background: transparent;
+  }
+  .btn:hover{ transform: translate(-2px,-2px); }
+
+  .btn-primary{
+    background: var(--oxblood);
+    border-color: var(--oxblood-deep);
+    color: var(--cream);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .btn-primary:hover{ box-shadow: 5px 5px 0 var(--ink); }
+
+  .btn-ghost{
+    color: var(--ink);
+    box-shadow: 3px 3px 0 var(--gold);
+  }
+  .btn-ghost:hover{ box-shadow: 5px 5px 0 var(--gold); }
+
+  .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
+
+  /* ---------- event facts strip ---------- */
+  .facts{
+    font-family:'DM Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display:flex;
+    gap: 28px;
+    justify-content:center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--paper-line);
+  }
+  .facts span b{ color: var(--ink); font-weight:500; }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 64px 0; }
+  .section-head{ text-align:center; margin-bottom: 44px; }
+  .kicker{
+    font-family:'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--oxblood);
+    margin-bottom: 10px;
+  }
+  .section-title{
+    font-family:'DM Serif Display', serif;
+    font-size: clamp(30px, 5vw, 42px);
+    margin: 0;
+  }
+
+  /* ---------- how it works ---------- */
+  .steps{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: step; }
+  @media (max-width: 720px){ .steps{ grid-template-columns: 1fr 1fr; } }
+  .step{
+    position: relative;
+    padding: 20px 16px 18px;
+    background: var(--cream-deep);
+    border: 1.5px solid var(--ink);
+    border-radius: 2px;
+    transform: rotate(var(--tilt, 0deg));
+  }
+  .step:nth-child(1){ --tilt: -1.2deg; }
+  .step:nth-child(2){ --tilt: 0.8deg; }
+  .step:nth-child(3){ --tilt: -0.6deg; }
+  .step:nth-child(4){ --tilt: 1.3deg; }
+  .step-num{
+    counter-increment: step;
+    font-family:'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 34px;
+    color: var(--oxblood);
+    line-height:1;
+    margin-bottom: 8px;
+    display:block;
+  }
+  .step-num::before{ content: "0" counter(step); }
+  .step p{ margin: 0; font-size: 14.5px; color: var(--ink-soft); }
+  .step p b{ color: var(--ink); }
+
+  /* ---------- badges ---------- */
+  .badges{ display:flex; gap: 40px; justify-content:center; flex-wrap: wrap; }
+  .badge-card{
+    width: 260px;
+    text-align:center;
+    padding: 30px 22px 26px;
+    background: var(--cream);
+    border: 1.5px dashed var(--ink);
+    border-radius: 4px;
+  }
+  .medal{ width: 92px; height: 92px; margin: 0 auto 16px; display:block; }
+  .badge-name{ font-family:'DM Serif Display', serif; font-style: italic; font-size: 22px; margin: 0 0 8px; }
+  .badge-card.prof .badge-name{ color: var(--oxblood); }
+  .badge-desc{ font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+  .badge-tag{
+    display:inline-block;
+    margin-top: 12px;
+    font-family:'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 20px;
+  }
+
+  /* ---------- app / tabs ---------- */
+  .app-section{ background: var(--cream-deep); border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
+
+  .tabs{ display:flex; justify-content:center; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; }
+  .tab-btn{
+    font-family:'DM Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: 1.5px solid var(--ink);
+    border-radius: 20px;
+    background: var(--cream);
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .tab-btn.active{ background: var(--oxblood); border-color: var(--oxblood-deep); color: var(--cream); }
+
+  .panel-card{
+    max-width: 560px;
+    margin: 0 auto;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    padding: 30px 26px;
+  }
+
+  .field{ margin-bottom: 18px; text-align:left; }
+  .field label{
+    display:block;
+    font-family:'DM Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .field input, .field textarea{
+    width: 100%;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px;
+    padding: 11px 12px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    background: var(--cream);
+    color: var(--ink);
+  }
+  .field textarea{ resize: vertical; min-height: 70px; }
+  .field input:focus, .field textarea:focus{ outline: 2px solid var(--gold); outline-offset: 1px; }
+
+  .msg{ font-size: 13.5px; margin-top: 10px; text-align:left; }
+  .msg.ok{ color: var(--ok); }
+  .msg.err{ color: var(--err); }
+  [hidden]{ display:none !important; }
+
+  .confirm-card{ text-align:center; padding: 8px 0; }
+  .confirm-card .badge-name{ margin-top: 10px; }
+
+  /* speaker list */
+  .voter-id{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+  @media (max-width: 480px){ .voter-id{ grid-template-columns: 1fr; } }
+
+  .speaker-grid{ display:grid; gap: 12px; text-align:left; }
+  .speaker-card{
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    padding: 14px 16px;
+    background: var(--cream);
+    cursor: pointer;
+    transition: transform .1s ease;
+  }
+  .speaker-card:hover{ transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--gold); }
+  .speaker-card .name{ font-family:'DM Serif Display', serif; font-style:italic; font-size: 18px; }
+  .speaker-card .topic{ font-size: 13.5px; color: var(--ink-soft); margin-top: 2px; }
+  .speaker-card.voted{ border-color: var(--oxblood); background: var(--cream-deep); }
+
+  .rating-row{ display:flex; gap: 8px; justify-content:center; margin: 16px 0; }
+  .rating-btn{
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+    background: var(--cream);
+    font-family:'DM Mono', monospace;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .rating-btn.selected{ background: var(--gold); border-color: var(--gold); color: var(--cream); }
+
+  /* admin */
+  .result-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 12px 14px; margin-bottom: 8px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    text-align:left;
+  }
+  .result-row.leader{ border-color: var(--oxblood); background: var(--cream-deep); }
+  .result-row .rn{ font-family:'DM Serif Display', serif; font-style: italic; font-size: 17px; }
+  .result-row .rt{ font-size: 12.5px; color: var(--ink-soft); }
+  .result-row .rv{ font-family:'DM Mono', monospace; font-size: 15px; }
+
+  .feedback-row{ padding: 10px 0; border-bottom: 1px dashed var(--paper-line); text-align:left; }
+  .feedback-row:last-child{ border-bottom:none; }
+
+  /* ---------- closing / footer ---------- */
+  .closing{ text-align:center; padding: 70px 0 30px; }
+  .closing .eyebrow{ margin-bottom: 14px; }
+  .closing h2{ font-family:'DM Serif Display', serif; font-style: italic; font-size: clamp(28px, 5vw, 40px); margin: 0 0 26px; }
+
+  footer{
+    border-top: 1px dashed var(--paper-line);
+    padding: 26px 0 40px;
+    text-align:center;
+    font-family:'DM Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce){ .mascot{ animation: none; } }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="brandline">
+    <div class="brand"><b>NERD</b> SOCIETY</div>
+    <div class="brand">HANOI</div>
+  </div>
+</header>
+
+<section class="hero wrap">
+  <svg class="mascot" viewBox="0 0 335 160" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" stroke="#2b2925" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <g stroke-width="2.5">
+        <path d="M158 6 L158 16 M153 11 L163 11"/>
+        <path d="M272 14 L272 22 M268 18 L276 18"/>
+        <path d="M146 46 L150 50 M150 46 L146 50"/>
+      </g>
+      <g transform="rotate(-3 231 34)">
+        <rect x="196" y="12" width="70" height="46" rx="3"/>
+        <path d="M206 27 Q218 21 230 27 T256 25"/>
+        <path d="M206 40 L242 40"/>
+        <path d="M229 58 L227 94"/>
+        <path d="M227 94 L212 106"/>
+        <path d="M227 94 L242 108"/>
+      </g>
+      <g>
+        <circle cx="256" cy="8" r="8"/>
+        <path d="M256 8 L256 3"/>
+        <path d="M256 8 L260 10"/>
+      </g>
+      <path d="M170 23 Q173 20 176 23"/>
+      <path d="M176 23 Q179 20 182 23"/>
+      <circle cx="173" cy="28" r="1.4" fill="#2b2925"/>
+      <circle cx="179" cy="28" r="1.4" fill="#2b2925"/>
+      <path d="M172 33 Q176 36.5 180 33"/>
+      <path d="M176 37 L176 64"/>
+      <path d="M176 44 L198 30 L208 25"/>
+      <path d="M176 48 L163 58"/>
+      <path d="M176 64 L164 94"/>
+      <path d="M176 64 L187 94"/>
+      <g>
+        <path d="M14 87 Q17 84 20 87"/>
+        <path d="M20 87 Q23 84 26 87"/>
+        <circle cx="17" cy="91" r="1.3" fill="#2b2925"/>
+        <circle cx="23" cy="91" r="1.3" fill="#2b2925"/>
+        <path d="M16 95 Q20 98.5 24 95"/>
+        <path d="M10 124 Q20 106 30 124"/>
+        <path d="M10 100 L2 86"/>
+        <path d="M30 100 L38 86"/>
+      </g>
+      <g>
+        <path d="M52 97 Q55 94 58 97"/>
+        <path d="M58 97 Q61 94 64 97"/>
+        <circle cx="55" cy="101" r="1.3" fill="#2b2925"/>
+        <circle cx="61" cy="101" r="1.3" fill="#2b2925"/>
+        <path d="M54 105 Q58 108 62 105"/>
+        <path d="M46 132 Q58 116 70 132"/>
+        <path d="M50 111 L58 103 L66 111"/>
+      </g>
+      <g>
+        <path d="M90 97 Q93 94 96 97"/>
+        <path d="M96 97 Q99 94 102 97"/>
+        <circle cx="93" cy="101" r="1.3" fill="#2b2925"/>
+        <circle cx="99" cy="101" r="1.3" fill="#2b2925"/>
+        <path d="M91 105 Q94.5 107.5 98 105"/>
+        <path d="M84 132 Q96 116 108 132"/>
+        <path d="M103 108 Q110 103 104 95"/>
+      </g>
+      <g>
+        <path d="M128 87 Q131 84 134 87"/>
+        <path d="M134 87 Q137 84 140 87"/>
+        <circle cx="131" cy="91" r="1.3" fill="#2b2925"/>
+        <circle cx="137" cy="91" r="1.3" fill="#2b2925"/>
+        <path d="M130 95 Q134 98.5 138 95"/>
+        <path d="M124 124 Q134 106 144 124"/>
+        <path d="M124 100 L116 86"/>
+        <path d="M144 100 L152 86"/>
+      </g>
+      <g>
+        <path d="M270 90 L282 104 L294 90 L304 106 Q308 116 304 126 L304 130 L264 130 L264 126 Q260 116 264 106 Z"/>
+        <path d="M252 110 L264 111"/>
+        <path d="M252 116 L264 116"/>
+        <path d="M304 111 L316 110"/>
+        <path d="M304 116 L316 116"/>
+        <circle cx="276" cy="112" r="1.6" fill="#2b2925"/>
+        <circle cx="292" cy="112" r="1.6" fill="#2b2925"/>
+        <path d="M282 118 Q284 120 286 118"/>
+        <path d="M264 130 L304 130"/>
+        <path d="M274 130 L274 138"/>
+        <path d="M284 130 L284 138"/>
+        <path d="M294 130 L294 138"/>
+        <path d="M264 138 L304 138"/>
+        <path d="M304 128 Q320 124 318 110 Q316 100 324 102"/>
+      </g>
+    </g>
+  </svg>
+
+  <span class="eyebrow">5 phút kể chuyện, cả tối để quen nhau</span>
+  <h1>Nerd&nbsp;Night</h1>
+  <svg class="squiggle" viewBox="0 0 140 14"><path d="M2 8 Q 20 2, 38 8 T 74 8 T 110 8 T 138 6"/></svg>
+
+  <p class="tagline">
+    Ai cũng có một thứ mình đang mê mà ít khi có dịp kể cho ai nghe.
+    Vật lý lượng tử, vì sao mèo kén ăn, gì cũng được — miễn kể được trong 5 phút.
+    <b>Thắng thua rồi cũng quên, chỉ nhớ lúc cả phòng gật gù "ơ hay đấy".</b>
+  </p>
+
+  <div class="cta-row">
+    <a href="#register" class="btn btn-primary" onclick="showTab('register')">Đăng ký làm speaker</a>
+    <a href="#vote" class="btn btn-ghost" onclick="showTab('vote')">Vote đêm nay</a>
+  </div>
+
+  <div class="facts">
+    <span>Thứ Bảy <b>11/07/2026</b></span>
+    <span>Giờ <b>20:00</b></span>
+    <span>Địa điểm <b>Nerd Society, Hồ Tùng Mậu</b></span>
+    <span>Giới hạn <b>15 người / tối</b></span>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="section-head">
+    <h2 class="section-title">4 bước, không có gì phức tạp</h2>
+  </div>
+  <div class="steps">
+    <div class="step"><span class="step-num"></span><p><b>Đăng ký</b> chủ đề bạn muốn kể trước đêm diễn ra.</p></div>
+    <div class="step"><span class="step-num"></span><p><b>Trình bày 5 phút</b> — ngắn gọn, đúng chất "mê là kể".</p></div>
+    <div class="step"><span class="step-num"></span><p>Cả phòng <b>vote</b> cho phần trình bày yêu thích nhất.</p></div>
+    <div class="step"><span class="step-num"></span><p>Người thắng nhận <b>Nerd Prof Badge</b>, ai cũng có <b>Nerd Badge</b>.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="section-head">
+    <h2 class="section-title">Ai cũng về nhà với một huy hiệu</h2>
+  </div>
+  <div class="badges">
+    <div class="badge-card">
+      <svg class="medal" viewBox="0 0 100 100">
+        <g fill="none" stroke="#2b2925" stroke-width="2.5">
+          <circle cx="50" cy="42" r="30" stroke-dasharray="4 3"/>
+          <circle cx="50" cy="42" r="22"/>
+          <path d="M50 20 L54 34 L50 30 L46 34 Z" fill="#2b2925" stroke="none"/>
+          <path d="M38 68 L30 92 L50 82 L70 92 L62 68"/>
+        </g>
+      </svg>
+      <p class="badge-name">Nerd Badge</p>
+      <p class="badge-desc">Dành cho mọi người có mặt đêm đó — chỉ cần đến, đã tính là một trong hội "nerd".</p>
+      <span class="badge-tag">Ai cũng có</span>
+    </div>
+    <div class="badge-card prof">
+      <svg class="medal" viewBox="0 0 100 100">
+        <g fill="none" stroke="#7a2e2e" stroke-width="2.5">
+          <circle cx="50" cy="42" r="30" stroke-dasharray="4 3"/>
+          <circle cx="50" cy="42" r="22"/>
+          <path d="M38 30 L50 22 L62 30 L62 40 L50 48 L38 40 Z" fill="#7a2e2e" stroke="none"/>
+          <path d="M38 68 L30 92 L50 82 L70 92 L62 68"/>
+        </g>
+      </svg>
+      <p class="badge-name">Nerd Prof Badge</p>
+      <p class="badge-desc">Dành cho phần trình bày được vote nhiều nhất đêm đó. Một danh hiệu, cả đêm để giành lấy.</p>
+      <span class="badge-tag">Người thắng cuộc</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== APP: 3 TABS ===================== -->
+<section class="app-section">
+  <div class="wrap" style="padding-top:56px; padding-bottom:56px;">
+    <div class="section-head">
+      <div class="kicker">Tham gia</div>
+      <h2 class="section-title">Đăng ký, vote, hoặc xem kết quả</h2>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn" data-tab="register" onclick="showTab('register')">Đăng ký</button>
+      <button class="tab-btn" data-tab="vote" onclick="showTab('vote')">Vote</button>
+      <button class="tab-btn" data-tab="feedback" onclick="showTab('feedback')">Feedback</button>
+    </div>
+
+    <!-- ---------- REGISTER PANEL ---------- -->
+    <div class="tab-panel panel-card" id="panel-register" hidden>
+      <p class="badge-desc" id="register-slots" style="text-align:center;margin-bottom:16px;"></p>
+      <form id="register-form">
+        <div class="field">
+          <label for="reg-name">Tên</label>
+          <input id="reg-name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="reg-phone">Số điện thoại</label>
+          <input id="reg-phone" name="phone" type="tel" required>
+        </div>
+        <div class="field">
+          <label for="reg-topic">Chủ đề bạn sẽ kể</label>
+          <input id="reg-topic" name="topic" required placeholder='VD: "Vì sao mèo kén ăn"'>
+        </div>
+        <div class="field">
+          <label for="reg-desc">Mô tả ngắn (không bắt buộc)</label>
+          <textarea id="reg-desc" name="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="register-submit-btn" style="width:100%;">Đăng ký</button>
+        <div class="msg" id="register-msg" hidden></div>
+      </form>
+
+      <div class="confirm-card" id="register-confirm" hidden>
+        <svg class="medal" viewBox="0 0 100 100" style="width:72px;height:72px;">
+          <g fill="none" stroke="#7a2e2e" stroke-width="2.5">
+            <circle cx="50" cy="42" r="30" stroke-dasharray="4 3"/>
+            <circle cx="50" cy="42" r="22"/>
+            <path d="M38 30 L50 22 L62 30 L62 40 L50 48 L38 40 Z" fill="#7a2e2e" stroke="none"/>
+            <path d="M38 68 L30 92 L50 82 L70 92 L62 68"/>
+          </g>
+        </svg>
+        <p class="badge-name" id="confirm-name"></p>
+        <p class="badge-desc" id="confirm-topic"></p>
+        <p class="badge-desc" style="margin-top:14px;">Hẹn gặp bạn trên "sân khấu" nhé!</p>
+      </div>
+    </div>
+
+    <!-- ---------- VOTE PANEL ---------- -->
+    <div class="tab-panel panel-card" id="panel-vote" hidden>
+      <div id="vote-id-step">
+        <div class="voter-id">
+          <div class="field" style="margin-bottom:0;">
+            <label for="voter-name">Tên bạn</label>
+            <input id="voter-name">
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label for="voter-phone">SĐT</label>
+            <input id="voter-phone" type="tel">
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--ink-soft);margin:-8px 0 20px;">Mỗi số điện thoại chỉ vote được 1 lần.</p>
+      </div>
+
+      <div id="speaker-list" class="speaker-grid"></div>
+      <div class="msg" id="vote-msg" hidden></div>
+    </div>
+
+    <!-- ---------- FEEDBACK PANEL ---------- -->
+    <div class="tab-panel panel-card" id="panel-feedback" hidden>
+      <p class="badge-desc" style="text-align:center;margin-bottom:18px;">Cho Nerd Society xin ý kiến về đêm nay nhé 🙂</p>
+      <div class="rating-row" id="rating-row"></div>
+      <div class="field" style="text-align:left;">
+        <label for="feedback-comment">Điều gì bạn thích nhất / muốn cải thiện? (không bắt buộc)</label>
+        <textarea id="feedback-comment"></textarea>
+      </div>
+      <button class="btn btn-primary" id="feedback-submit-btn" style="width:100%;">Gửi feedback</button>
+      <p class="msg ok" id="feedback-thanks" hidden>Cảm ơn bạn rất nhiều!</p>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  NERD SOCIETY — HANOI · nerdnight.nerdsociety.com.vn
+</footer>
+
+<script>
+  // ===================== CONFIG =====================
+  const CONFIG = {
+    APPS_SCRIPT_URL: 'PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE'
+  };
+
+  function apiGet(params) {
+    const url = CONFIG.APPS_SCRIPT_URL + '?' + new URLSearchParams(params).toString();
+    return fetch(url).then(function (r) { return r.json(); });
+  }
+  function apiPost(payload) {
+    return fetch(CONFIG.APPS_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    }).then(function (r) { return r.json(); });
+  }
+  function showMsg(el, text, ok) {
+    el.textContent = text;
+    el.className = 'msg ' + (ok ? 'ok' : 'err');
+    el.hidden = false;
+  }
+
+  // ===================== TABS =====================
+  const TAB_NAMES = ['register', 'vote', 'feedback'];
+  let ratingButtonsReady = false;
+  function showTab(name) {
+    if (TAB_NAMES.indexOf(name) === -1) name = 'register';
+    TAB_NAMES.forEach(function (n) {
+      document.getElementById('panel-' + n).hidden = (n !== name);
+    });
+    document.querySelectorAll('.tab-btn').forEach(function (b) {
+      b.classList.toggle('active', b.dataset.tab === name);
+    });
+    history.replaceState(null, '', '#' + name);
+    document.querySelector('.app-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (name === 'vote') loadSpeakers();
+    if (name === 'register') loadRegisterStatus();
+    if (name === 'feedback' && !ratingButtonsReady) {
+      setupRatingButtons();
+      ratingButtonsReady = true;
+    }
+  }
+
+  let registerStatusLoaded = false;
+  function loadRegisterStatus() {
+    if (registerStatusLoaded) return;
+    apiGet({ action: 'getSpeakers' }).then(function (res) {
+      if (!res.success) return;
+      registerStatusLoaded = true;
+      const max = res.maxSpeakers || 15;
+      const taken = res.data.length;
+      const slotsEl = document.getElementById('register-slots');
+      const form = document.getElementById('register-form');
+      if (taken >= max) {
+        slotsEl.textContent = 'Đã đủ ' + max + ' speaker cho đêm nay rồi — hẹn bạn ở Nerd Night lần sau nhé!';
+        form.hidden = true;
+      } else {
+        slotsEl.textContent = 'Còn ' + (max - taken) + '/' + max + ' chỗ speaker.';
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    const initial = (location.hash || '').replace('#', '');
+    showTab(TAB_NAMES.indexOf(initial) !== -1 ? initial : 'register');
+  });
+
+  // ===================== REGISTER =====================
+  document.getElementById('register-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const btn = document.getElementById('register-submit-btn');
+    const msg = document.getElementById('register-msg');
+    msg.hidden = true;
+
+    const name = document.getElementById('reg-name').value.trim();
+    const phone = document.getElementById('reg-phone').value.trim();
+    const topic = document.getElementById('reg-topic').value.trim();
+    const description = document.getElementById('reg-desc').value.trim();
+
+    if (!name || !phone || !topic) {
+      showMsg(msg, 'Điền đủ tên, SĐT và chủ đề nhé.', false);
+      return;
+    }
+
+    btn.disabled = true;
+    apiPost({ action: 'register', name: name, phone: phone, topic: topic, description: description })
+      .then(function (res) {
+        btn.disabled = false;
+        if (res.success) {
+          document.getElementById('register-form').hidden = true;
+          document.getElementById('confirm-name').textContent = name;
+          document.getElementById('confirm-topic').textContent = topic;
+          document.getElementById('register-confirm').hidden = false;
+        } else if (res.error === 'full') {
+          showMsg(msg, 'Rất tiếc, vừa đủ 15 speaker mất rồi — hẹn bạn lần sau nhé!', false);
+          document.getElementById('register-slots').textContent = 'Đã đủ 15 speaker cho đêm nay rồi.';
+        } else {
+          showMsg(msg, 'Có lỗi xảy ra, thử lại nhé.', false);
+        }
+      })
+      .catch(function () {
+        btn.disabled = false;
+        showMsg(msg, 'Không kết nối được, kiểm tra mạng rồi thử lại.', false);
+      });
+  });
+
+  // ===================== VOTE =====================
+  let speakersLoaded = false;
+  let hasVoted = false;
+
+  function loadSpeakers() {
+    if (speakersLoaded) return;
+    const list = document.getElementById('speaker-list');
+    list.innerHTML = '<p class="badge-desc">Đang tải danh sách speaker...</p>';
+    apiGet({ action: 'getSpeakers' }).then(function (res) {
+      if (!res.success || !res.data.length) {
+        list.innerHTML = '<p class="badge-desc">Chưa có speaker nào đăng ký.</p>';
+        return;
+      }
+      speakersLoaded = true;
+      list.innerHTML = '';
+      res.data.forEach(function (s) {
+        const card = document.createElement('div');
+        card.className = 'speaker-card';
+        card.innerHTML = '<div class="name">' + escapeHtml(s.name) + '</div><div class="topic">' + escapeHtml(s.topic) + '</div>';
+        card.addEventListener('click', function () { castVote(s.id, card); });
+        list.appendChild(card);
+      });
+    });
+  }
+
+  function castVote(speakerId, cardEl) {
+    if (hasVoted) return;
+    const msg = document.getElementById('vote-msg');
+    msg.hidden = true;
+    const voterName = document.getElementById('voter-name').value.trim();
+    const voterPhone = document.getElementById('voter-phone').value.trim();
+
+    if (!voterName || !voterPhone) {
+      showMsg(msg, 'Nhập tên và số điện thoại của bạn trước nhé.', false);
+      return;
+    }
+
+    apiPost({ action: 'vote', voterName: voterName, voterPhone: voterPhone, votedFor: speakerId })
+      .then(function (res) {
+        if (res.success) {
+          hasVoted = true;
+          cardEl.classList.add('voted');
+          document.getElementById('vote-id-step').style.opacity = '0.5';
+          showMsg(msg, 'Vote của bạn đã được ghi nhận. Cảm ơn bạn! Đang chuyển đến trang feedback...', true);
+          setTimeout(function () { showTab('feedback'); }, 1100);
+        } else if (res.error === 'already_voted') {
+          showMsg(msg, 'Bạn đã vote rồi 🙂', false);
+        } else {
+          showMsg(msg, 'Có lỗi xảy ra, thử lại nhé.', false);
+        }
+      })
+      .catch(function () {
+        showMsg(msg, 'Không kết nối được, kiểm tra mạng rồi thử lại.', false);
+      });
+  }
+
+  let selectedRating = 0;
+  function setupRatingButtons() {
+    const row = document.getElementById('rating-row');
+    row.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'rating-btn';
+      b.textContent = i;
+      b.addEventListener('click', function () {
+        selectedRating = i;
+        row.querySelectorAll('.rating-btn').forEach(function (x) { x.classList.remove('selected'); });
+        b.classList.add('selected');
+      });
+      row.appendChild(b);
+    }
+  }
+  document.getElementById('feedback-submit-btn').addEventListener('click', function () {
+    if (!selectedRating) {
+      document.getElementById('rating-row').insertAdjacentHTML(
+        'afterend',
+        '<p class="msg err" id="rating-required-msg">Chọn 1 mức đánh giá trước nhé.</p>'
+      );
+      return;
+    }
+    const comment = document.getElementById('feedback-comment').value.trim();
+    apiPost({ action: 'feedback', rating: selectedRating, comment: comment }).then(function (res) {
+      if (res.success) {
+        document.getElementById('feedback-submit-btn').hidden = true;
+        document.getElementById('feedback-thanks').hidden = false;
+      }
+    });
+  });
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+</script>
+
+</body>
+</html>
