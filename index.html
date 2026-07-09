@@ -739,8 +739,9 @@
     });
   }
 
+  let voteInFlight = false;
   function castVote(speakerId, cardEl) {
-    if (hasVoted) return;
+    if (hasVoted || voteInFlight) return;
     const msg = document.getElementById('vote-msg');
     msg.hidden = true;
     const voterName = document.getElementById('voter-name').value.trim();
@@ -751,8 +752,12 @@
       return;
     }
 
+    voteInFlight = true;
+    showMsg(msg, 'Đang gửi vote...', true);
+
     apiPost({ action: 'vote', voterName: voterName, voterPhone: voterPhone, votedFor: speakerId })
       .then(function (res) {
+        voteInFlight = false;
         if (res.success) {
           hasVoted = true;
           cardEl.classList.add('voted');
@@ -766,6 +771,7 @@
         }
       })
       .catch(function () {
+        voteInFlight = false;
         showMsg(msg, 'Không kết nối được, kiểm tra mạng rồi thử lại.', false);
       });
   }
